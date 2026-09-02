@@ -12,6 +12,7 @@
   --accent-emerald: #10b981;
   --accent-emerald-glow: rgba(16, 185, 129, 0.35);
   --accent-indigo: #818cf8;
+  --accent-amber: #f59e0b;
   
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
@@ -37,7 +38,7 @@ body {
   justify-content: center;
   overflow-x: hidden;
   position: relative;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
 }
 
 /* Ambient Background Glows */
@@ -366,6 +367,208 @@ body {
 
 .text-emerald {
   color: var(--accent-emerald) !important;
+}
+
+.text-cyan {
+  color: var(--primary-cyan) !important;
+}
+
+/* NEW: Analysis Section Styles */
+.analysis-section {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .analysis-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+.analysis-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-card);
+  border-radius: 24px;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
+}
+
+.analysis-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.section-icon {
+  font-size: 1.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.analysis-header h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.section-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.peak-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.peak-pill {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.peak-pill.morning {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.peak-pill.evening {
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--primary-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 250px;
+  width: 100%;
+}
+
+/* Station Search Styles */
+.search-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+#stationSearchInput {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.75rem 1rem 0.75rem 2.6rem;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+#stationSearchInput:focus {
+  border-color: var(--primary-cyan);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.station-select-dropdown {
+  width: 100%;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.search-result-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.result-id {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-cyan);
+  text-transform: uppercase;
+}
+
+.result-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 0.2rem;
+}
+
+.result-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.res-stat-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.res-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.res-stat-val {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 /* Bottom Bar */

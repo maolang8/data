@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>서울시 따릉이 핵심 운영 대시보드</title>
+  <title>서울시 따릉이 핵심 운영 & 피크타임 대시보드</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,14 +22,14 @@
     <header class="dashboard-header">
       <div class="header-badge">
         <span class="status-dot"></span>
-        <span class="badge-text">Seoul Public Bike • Realtime Aggregation</span>
+        <span class="badge-text">Seoul Public Bike • Peak Analysis & Station Finder</span>
       </div>
       <h1 class="dashboard-title">
         <span class="icon-bike">🚲</span>
-        서울시 따릉이 핵심 운영 현황
+        서울시 따릉이 핵심 운영 & 피크타임 대시보드
       </h1>
       <p class="dashboard-subtitle">
-        서울시 전역 따릉이 대여소의 <strong>총 이용건수</strong> 및 <strong>운영 대여소 수</strong> 핵심 지표 대시보드
+        <strong>총 이용건수</strong>, <strong>운영 대여소 수</strong> 및 <strong>24시간 피크타임 추이</strong> 실시간 분석
       </p>
     </header>
 
@@ -107,6 +109,71 @@
         </div>
       </section>
     </main>
+
+    <!-- NEW SECTION: Peak Time Hourly Trend & Station Search -->
+    <section class="analysis-section">
+      <!-- 24시간 피크타임 차트 카드 -->
+      <div class="analysis-card chart-large-card">
+        <div class="analysis-header">
+          <div class="header-left">
+            <div class="section-icon">📈</div>
+            <div>
+              <h3>24시간 시간대별 이용 피크타임 추이</h3>
+              <p class="section-desc">00시 ~ 23시 시간대별 이용 패턴 (출퇴근 피크시간대 집중)</p>
+            </div>
+          </div>
+          <div class="peak-badges">
+            <span class="peak-pill morning">🌅 출근 피크: 08시 (3.2M건)</span>
+            <span class="peak-pill evening">🌆 퇴근 피크: 18시 (4.0M건)</span>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="hourlyTrendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 대여소 조회 및 검색 카드 (3번 기능) -->
+      <div class="analysis-card search-card">
+        <div class="analysis-header">
+          <div class="header-left">
+            <div class="section-icon">🔍</div>
+            <div>
+              <h3>대여소별 피크타임 실시간 조회</h3>
+              <p class="section-desc">원하는 대여소를 검색하거나 목록에서 선택해 보세요.</p>
+            </div>
+          </div>
+        </div>
+        <div class="search-controls">
+          <div class="search-input-wrap">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="stationSearchInput" placeholder="대여소 이름 검색 (예: 마곡나루역, 롯데월드타워)" autocomplete="off">
+          </div>
+          <select id="stationSelect" class="station-select-dropdown">
+            <option value="">-- 주요 인기 대여소 바로 선택 --</option>
+          </select>
+        </div>
+
+        <div class="search-result-box" id="searchResultBox">
+          <div class="result-header">
+            <span class="result-id" id="resStationId">대여소 #2715</span>
+            <h4 class="result-title" id="resStationName">2715. 마곡나루역 2번 출구</h4>
+          </div>
+          <div class="result-stats-grid">
+            <div class="res-stat-item">
+              <span class="res-stat-label">총 이용건수</span>
+              <span class="res-stat-val" id="resTotalCount">173,645건</span>
+            </div>
+            <div class="res-stat-item">
+              <span class="res-stat-label">최다 이용 피크시간대</span>
+              <span class="res-stat-val text-cyan" id="resPeakHour">오전 08:00 (출근 피크)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Bottom summary banner -->
     <footer class="dashboard-footer">
