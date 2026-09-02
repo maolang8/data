@@ -1,114 +1,128 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>서울시 따릉이 대시보드</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>서울시 따릉이 핵심 운영 대시보드</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <header class="dashboard-header">
-            <div class="header-title">
-                <div class="logo-icon">
-                    <i class="fa-solid fa-bicycle"></i>
-                </div>
-                <div>
-                    <h1>서울시 따릉이 이용현황 대시보드</h1>
-                    <p class="subtitle">Seoul Public Bike Real-time & Analytical Overview</p>
-                </div>
-            </div>
-            <div class="header-badge">
-                <span class="live-dot"></span> 데이터셋 종합 분석
-            </div>
-        </header>
+  <!-- Ambient background glow elements -->
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+  <div class="bg-grid"></div>
 
-        <!-- KPI Cards Grid -->
-        <section class="kpi-grid">
-            <!-- Card 1: 총 이용건수 -->
-            <div class="kpi-card card-primary">
-                <div class="card-glow"></div>
-                <div class="card-header">
-                    <div class="card-icon icon-emerald">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                    <span class="card-tag">Total Volume</span>
-                </div>
-                <div class="card-body">
-                    <h2 class="card-title">총 이용건수</h2>
-                    <div class="card-value-container">
-                        <span class="card-value" id="totalUsage">0</span>
-                        <span class="card-unit">건</span>
-                    </div>
-                    <div class="card-subtitle-breakdown">
-                        <span class="sub-item"><i class="fa-solid fa-briefcase"></i> 평일: 31,414,681건 (75.4%)</span>
-                        <span class="sub-item"><i class="fa-solid fa-tree"></i> 주말: 10,234,956건 (24.6%)</span>
-                    </div>
-                </div>
-            </div>
+  <div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-badge">
+        <span class="status-dot"></span>
+        <span class="badge-text">Seoul Public Bike • Realtime Aggregation</span>
+      </div>
+      <h1 class="dashboard-title">
+        <span class="icon-bike">🚲</span>
+        서울시 따릉이 핵심 운영 현황
+      </h1>
+      <p class="dashboard-subtitle">
+        서울시 전역 따릉이 대여소의 <strong>총 이용건수</strong> 및 <strong>운영 대여소 수</strong> 핵심 지표 대시보드
+      </p>
+    </header>
 
-            <!-- Card 2: 운영 대여소 수 -->
-            <div class="kpi-card card-secondary">
-                <div class="card-glow"></div>
-                <div class="card-header">
-                    <div class="card-icon icon-cyan">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </div>
-                    <span class="card-tag">Active Network</span>
-                </div>
-                <div class="card-body">
-                    <h2 class="card-title">운영 대여소 수</h2>
-                    <div class="card-value-container">
-                        <span class="card-value" id="totalStations">0</span>
-                        <span class="card-unit">개소</span>
-                    </div>
-                    <div class="card-subtitle-breakdown">
-                        <span class="sub-item"><i class="fa-solid fa-city"></i> 서울 25개 자치구 커버리지</span>
-                        <span class="sub-item"><i class="fa-solid fa-clock"></i> 시간당 평균 이용 310.4건</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- Main 2-Metric Showcase Grid -->
+    <main class="metrics-grid">
+      <!-- Card 1: 총 이용건수 -->
+      <section class="metric-card card-rentals" id="metric-total-rentals">
+        <div class="card-glow-overlay"></div>
+        <div class="card-header">
+          <div class="metric-icon-wrap rentals-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18.5" cy="17.5" r="3.5"/>
+              <circle cx="5.5" cy="17.5" r="3.5"/>
+              <circle cx="15" cy="5" r="1"/>
+              <path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+            </svg>
+          </div>
+          <span class="metric-tag">Total Volume</span>
+        </div>
 
-        <!-- Chart Visualization Section -->
-        <section class="visual-section">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3><i class="fa-solid fa-chart-pie"></i> 요일유형별 이용 비중</h3>
-                </div>
-                <div class="chart-container">
-                    <canvas id="usagePieChart"></canvas>
-                </div>
-            </div>
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3><i class="fa-solid fa-clock"></i> 대여소 네트워크 및 활용 현황</h3>
-                </div>
-                <div class="info-metrics-grid">
-                    <div class="info-metric-box">
-                        <span class="metric-label">최다 이용 대여소</span>
-                        <span class="metric-val">마곡나루역 2번 출구</span>
-                        <span class="metric-desc">173,645건 대여 기록</span>
-                    </div>
-                    <div class="info-metric-box">
-                        <span class="metric-label">피크 이용 시간대</span>
-                        <span class="metric-val">18:00 (퇴근시간)</span>
-                        <span class="metric-desc">4,017,557건 이용</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+        <div class="card-body">
+          <h2 class="metric-label">총 이용건수</h2>
+          <div class="metric-number-wrapper">
+            <span class="metric-value" id="totalRentalsCount">0</span>
+            <span class="metric-unit">건</span>
+          </div>
+          <div class="metric-description">
+            서울 전역에서 발생한 누적 따릉이 대여 총량 (약 <strong>4,165만</strong> 건)
+          </div>
+        </div>
 
-    <script src="script.js"></script>
+        <div class="card-footer">
+          <div class="footer-chip">
+            <span class="chip-label">평일 이용</span>
+            <span class="chip-val">31,414,681건 (75.4%)</span>
+          </div>
+          <div class="footer-chip">
+            <span class="chip-label">주말 이용</span>
+            <span class="chip-val">10,234,956건 (24.6%)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card 2: 운영 대여소 수 -->
+      <section class="metric-card card-stations" id="metric-active-stations">
+        <div class="card-glow-overlay"></div>
+        <div class="card-header">
+          <div class="metric-icon-wrap stations-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <span class="metric-tag">Coverage</span>
+        </div>
+
+        <div class="card-body">
+          <h2 class="metric-label">운영 대여소 수</h2>
+          <div class="metric-number-wrapper">
+            <span class="metric-value" id="activeStationsCount">0</span>
+            <span class="metric-unit">개소</span>
+          </div>
+          <div class="metric-description">
+            서울시 25개 자치구에 배치된 시민 이동 거점 네트워크
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="footer-chip">
+            <span class="chip-label">시간당 평균</span>
+            <span class="chip-val">평균 310.4건 / 중앙값 146.0건</span>
+          </div>
+          <div class="footer-chip">
+            <span class="chip-label">네트워크 상태</span>
+            <span class="chip-val text-emerald">전 대여소 정상 가동</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom summary banner -->
+    <footer class="dashboard-footer">
+      <div class="summary-pill">
+        <span class="pill-dot"></span>
+        <span>기준 데이터: <code>bike_station_hourly.csv</code> (134,179건 시간대별 집계 데이터셋)</span>
+      </div>
+      <button class="btn-refresh" id="btnReplayAnimation" title="애니메이션 다시보기">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3L21.5 8M22 12.5a10 10 0 0 1-18.8 4.2L2.5 16"/>
+        </svg>
+        카운트 애니메이션 재생
+      </button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
