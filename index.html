@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울시 따릉이 대시보드</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-title">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-bicycle"></i>
+                </div>
+                <div>
+                    <h1>서울시 따릉이 이용현황 대시보드</h1>
+                    <p class="subtitle">Seoul Public Bike Real-time & Analytical Overview</p>
+                </div>
+            </div>
+            <div class="header-badge">
+                <span class="live-dot"></span> 데이터셋 종합 분석
+            </div>
+        </header>
+
+        <!-- KPI Cards Grid -->
+        <section class="kpi-grid">
+            <!-- Card 1: 총 이용건수 -->
+            <div class="kpi-card card-primary">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <div class="card-icon icon-emerald">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <span class="card-tag">Total Volume</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">총 이용건수</h2>
+                    <div class="card-value-container">
+                        <span class="card-value" id="totalUsage">0</span>
+                        <span class="card-unit">건</span>
+                    </div>
+                    <div class="card-subtitle-breakdown">
+                        <span class="sub-item"><i class="fa-solid fa-briefcase"></i> 평일: 31,414,681건 (75.4%)</span>
+                        <span class="sub-item"><i class="fa-solid fa-tree"></i> 주말: 10,234,956건 (24.6%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: 운영 대여소 수 -->
+            <div class="kpi-card card-secondary">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <div class="card-icon icon-cyan">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <span class="card-tag">Active Network</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">운영 대여소 수</h2>
+                    <div class="card-value-container">
+                        <span class="card-value" id="totalStations">0</span>
+                        <span class="card-unit">개소</span>
+                    </div>
+                    <div class="card-subtitle-breakdown">
+                        <span class="sub-item"><i class="fa-solid fa-city"></i> 서울 25개 자치구 커버리지</span>
+                        <span class="sub-item"><i class="fa-solid fa-clock"></i> 시간당 평균 이용 310.4건</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart Visualization Section -->
+        <section class="visual-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fa-solid fa-chart-pie"></i> 요일유형별 이용 비중</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="usagePieChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fa-solid fa-clock"></i> 대여소 네트워크 및 활용 현황</h3>
+                </div>
+                <div class="info-metrics-grid">
+                    <div class="info-metric-box">
+                        <span class="metric-label">최다 이용 대여소</span>
+                        <span class="metric-val">마곡나루역 2번 출구</span>
+                        <span class="metric-desc">173,645건 대여 기록</span>
+                    </div>
+                    <div class="info-metric-box">
+                        <span class="metric-label">피크 이용 시간대</span>
+                        <span class="metric-val">18:00 (퇴근시간)</span>
+                        <span class="metric-desc">4,017,557건 이용</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
