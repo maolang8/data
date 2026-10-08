@@ -452,7 +452,7 @@
     <div class="filter-bar">
         <div class="filter-group">
             <label for="date-picker">📅 날짜선택:</label>
-            <input type="date" id="date-picker" class="filter-input" value="2024-06-25" min="2024-01-01" max="2026-09-14" onchange="handleDateChange()">
+            <input type="date" id="date-picker" class="filter-input" min="2024-01-01" onchange="handleDateChange()">
         </div>
         <div class="filter-group">
             <label for="port-select">⚓ 항구선택:</label>
@@ -648,7 +648,25 @@
         let monthlyChartInstance = null;
         let portChartInstance = null;
 
+        const WEATHER_LOCATIONS = [
+            { port: '제주항', latitude: 33.5167, longitude: 126.5110 },
+            { port: '강정항', latitude: 33.2270, longitude: 126.4750 }
+        ];
+
+        function getTodayInKorea() {
+            return new Intl.DateTimeFormat('sv-SE', {
+                timeZone: 'Asia/Seoul',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).format(new Date());
+        }
+
         function initDashboard() {
+            const datePicker = document.getElementById('date-picker');
+            const todayInKorea = getTodayInKorea();
+            datePicker.value = todayInKorea;
+            datePicker.max = todayInKorea;
             renderCharts();
             handleDateChange();
         }
@@ -668,7 +686,7 @@
             }
         }
 
-        function handleDateChange() {
+        async function handleDateChange() {
             const selectedDate = document.getElementById('date-picker').value;
             const selectedPort = document.getElementById('port-select').value;
 
@@ -681,6 +699,55 @@
 
             updateKPIs(displayRecords, selectedDate);
             updateSalesTable(displayRecords);
+
+            if(selectedDate === getTodayInKorea()) {
+                await updateLiveWeather(selectedPort);
+            }
+        }
+
+        async function updateLiveWeather(selectedPort) {
+            const weatherStatus = document.getElementById('weather-status');
+            weatherStatus.innerHTML = '<span class="badge badge-warning">실시간 기상 불러오는 중...</span>';
+
+            const locations = selectedPort === 'ALL'
+                ? WEATHER_LOCATIONS
+                : WEATHER_LOCATIONS.filter(location => location.port === selectedPort);
+
+            try {
+                const weatherResults = await Promise.all(locations.map(async location => {
+                    const params = new URLSearchParams({
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                        current: 'temperature_2m,precipitation,wind_speed_10m,wind_gusts_10m',
+                        wind_speed_unit: 'ms',
+                        timezone: 'Asia/Seoul'
+                    });
+                    const response = await fetch('https://api.open-meteo.com/v1/forecast?' + params);
+                    if(!response.ok) throw new Error('Weather API response error');
+                    const data = await response.json();
+                    return { port: location.port, ...data.current };
+                }));
+
+                const maxRain = Math.max(...weatherResults.map(weather => weather.precipitation || 0));
+                const maxWind = Math.max(...weatherResults.map(weather => weather.wind_gusts_10m || weather.wind_speed_10m || 0));
+                const temperatures = weatherResults.map(weather => weather.temperature_2m).filter(Number.isFinite);
+                const averageTemperature = temperatures.length
+                    ? temperatures.reduce((sum, value) => sum + value, 0) / temperatures.length
+                    : 0;
+                const isBad = maxRain >= 1.0 || maxWind >= 10.0;
+                const locationLabel = selectedPort === 'ALL' ? '제주항·강정항' : selectedPort;
+
+                weatherStatus.innerHTML = isBad
+                    ? '<span class="badge badge-danger">실시간 위험 · ' + locationLabel + ' (강수 ' + maxRain.toFixed(1) + 'mm / 돌풍 ' + maxWind.toFixed(1) + 'm/s)</span>'
+                    : '<span class="badge badge-success">실시간 쾌적 · ' + locationLabel + ' (' + averageTemperature.toFixed(1) + '°C / 돌풍 ' + maxWind.toFixed(1) + 'm/s)</span>';
+                document.getElementById('kpi-rain-info').innerText = '실시간 강수량: ' + maxRain.toFixed(1) + ' mm';
+                document.getElementById('kpi-wind-info').innerText = '실시간 최대 돌풍: ' + maxWind.toFixed(1) + ' m/s';
+                document.getElementById('kpi-package-recommend').innerText = isBad
+                    ? 'Rain-Free 웰니스 & 쇼핑'
+                    : '자연경관 & 숏폼 투어';
+            } catch(error) {
+                weatherStatus.innerHTML = '<span class="badge badge-danger">실시간 기상 연결 실패</span>';
+            }
         }
 
         function updateKPIs(records, selectedDate) {
