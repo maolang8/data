@@ -20,4 +20,6 @@ marimo run app.py --host 127.0.0.1 --port 2718
 - 영업 의사결정: 비·바람 복합 위험 판정 및 상품 추천
 - 관리·검증: 데이터 기준일, 상태, 한계
 
+기존 분석 보고서와 차트는 `analysis/`에서 확인할 수 있습니다.
+
 `data/cruise_dashboard.db`는 `scripts/build_db.py`로 다시 생성할 수 있습니다.
