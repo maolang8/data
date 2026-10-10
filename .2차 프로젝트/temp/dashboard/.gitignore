@@ -1,0 +1,7 @@
+*.log
+__pycache__/
+__marimo__/
+.config/
+.marimo-cache/
+mvp-dashboard*.png
+mvp-static-check.html
