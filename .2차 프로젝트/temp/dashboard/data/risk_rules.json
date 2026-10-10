@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "description": "프로젝트 분석용 운영 시나리오이며 실제 사업자 운항 기준이 아닙니다.",
+  "high": {
+    "rain_mm": 5.0,
+    "wind_ms": 10.0,
+    "gust_ms": 14.0
+  },
+  "caution": {
+    "rain_mm": 1.0,
+    "wind_ms": 8.0,
+    "gust_ms": 11.0
+  }
+}

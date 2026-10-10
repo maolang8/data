@@ -5,3 +5,5 @@ __marimo__/
 .marimo-cache/
 mvp-dashboard*.png
 mvp-static-check.html
+final-dashboard*.png
+final-static-check.html
